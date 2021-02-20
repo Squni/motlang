@@ -47,7 +47,7 @@ public class User {
     @ManyToOne
     private Language motherTongue;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Language> toLearnLanguages;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -2,7 +2,7 @@
 <div class="scrollbar-sidebar">
     <div class="app-sidebar__inner">
         <ul class="vertical-nav-menu">
-            <li class="app-sidebar__heading">UI Components</li>
+            <li class="app-sidebar__heading">Learn</li>
             <li>
                 <a href="#">
                     <i class="metismenu-icon pe-7s-diamond"></i>
@@ -13,13 +13,21 @@
                     <li>
                         <a href="../components/elements-buttons-standard.html">
                             <i class="metismenu-icon"></i>
-                            Buttons
+                            Find teacher
                         </a>
                     </li>
                     <li>
                         <a href="../components/elements-dropdowns.html">
                             <i class="metismenu-icon">
-                            </i>Dropdowns
+                            </i>
+                            Calendar
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../components/elements-dropdowns.html">
+                            <i class="metismenu-icon">
+                            </i>
+                            Groups
                         </a>
                     </li>
                 </ul>

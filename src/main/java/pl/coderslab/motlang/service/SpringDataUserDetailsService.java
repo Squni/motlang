@@ -6,28 +6,34 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import pl.coderslab.motlang.entity.CurrentUser;
 import pl.coderslab.motlang.entity.User;
+import pl.coderslab.motlang.repository.UserRepository;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class SpringDataUserDetailsService implements UserDetailsService {
-    private AuthenticationService authService;
+
+    private UserRepository userRepo;
 
     @Autowired
-    public void setUserRepository(AuthenticationService authService) {
-        this.authService = authService;
+    public void setUserRepository(UserRepository userRepo) {
+        this.userRepo = userRepo;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = authService.findByUserName(username);
+    public CurrentUser loadUserByUsername(String username) {
+        User user = userRepo.findByUserName(username);
+        System.out.println(user);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         user.getRoles().forEach(r ->
                 grantedAuthorities.add(new SimpleGrantedAuthority(r.getName())));
-        return (UserDetails) new User(user.getUserName(), user.getPassword(), grantedAuthorities);
+        return new CurrentUser(user.getUserName(),user.getPassword(),
+                grantedAuthorities, user);
     }
+
 }

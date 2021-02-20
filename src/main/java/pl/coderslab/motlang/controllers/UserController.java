@@ -3,14 +3,11 @@ package pl.coderslab.motlang.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.coderslab.motlang.entity.Language;
 import pl.coderslab.motlang.entity.User;
 import pl.coderslab.motlang.repository.LanguageRepository;
-import pl.coderslab.motlang.service.AuthenticationService;
+import pl.coderslab.motlang.service.RegisterService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -18,13 +15,13 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    private LanguageRepository langRepo;
-    private AuthenticationService authService;
+    private final LanguageRepository langRepo;
+    private final RegisterService registerService;
 
 
-    public UserController(LanguageRepository langRepo, AuthenticationService authService) {
+    public UserController(LanguageRepository langRepo, RegisterService registerService) {
         this.langRepo = langRepo;
-        this.authService = authService;
+        this.registerService = registerService;
     }
 
     @ModelAttribute("languages")
@@ -41,7 +38,7 @@ public class UserController {
     @PostMapping("/register")
     public String register(Model model, @Valid User user, BindingResult result, @RequestParam String terms,
                            @RequestParam String confirm) {
-        if (authService.register(model, user, terms, confirm, result)) {
+        if (registerService.register(model, user, terms, confirm, result)) {
             return "redirect:login";
         }
         model.addAttribute("languages", langRepo.findAll());
@@ -51,14 +48,6 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new User());
-        return "login";
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
-        if (authService.verify(username, password)) {
-            return "dashboard";
-        }
         return "login";
     }
 

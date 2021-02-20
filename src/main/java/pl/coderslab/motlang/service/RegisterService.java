@@ -1,11 +1,11 @@
 package pl.coderslab.motlang.service;
 
 import lombok.Data;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import pl.coderslab.motlang.dao.Authentication;
+import pl.coderslab.motlang.dao.Register;
 import pl.coderslab.motlang.entity.Role;
 import pl.coderslab.motlang.entity.User;
 import pl.coderslab.motlang.repository.RoleRepository;
@@ -16,19 +16,16 @@ import java.util.HashSet;
 
 @Service
 @Data
-public class AuthenticationService implements Authentication {
+public class RegisterService implements Register {
 
     private final UserRepository userRepo;
     private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    AuthenticationService(UserRepository userRepo, RoleRepository roleRepository) {
+    RegisterService(UserRepository userRepo, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepo = userRepo;
-    }
-
-    @Override
-    public User findByUserName(String username) {
-        return userRepo.findByUserName(username);
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -50,7 +47,7 @@ public class AuthenticationService implements Authentication {
             model.addAttribute("exists", "User already exists");
         }
         if (check) {
-            user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.setEnabled(1);
             Role userRole = roleRepository.findByName("ROLE_USER");
             user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
@@ -60,18 +57,4 @@ public class AuthenticationService implements Authentication {
         return check;
     }
 
-    @Override
-    public boolean verify(String username, String password) {
-        User userToVerify = findByUserName(username);
-        System.out.println(userToVerify);
-        if (userToVerify != null && BCrypt.checkpw(password, userToVerify.getPassword())) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void edit(Long id) {
-
-    }
 }
