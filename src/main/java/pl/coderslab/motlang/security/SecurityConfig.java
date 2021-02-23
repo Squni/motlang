@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/app/**").authenticated()
                 .and().formLogin()
                 .loginPage("/login").defaultSuccessUrl("/app/dashboard")
-                .and().logout().logoutSuccessUrl("/home");
+                .and().logout().logoutSuccessUrl("/login");
     }
 
     @Bean

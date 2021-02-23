@@ -91,6 +91,7 @@
 <script src='<c:url value="/resources/register/vendor/jquery/jquery.min.js"/>'></script>
 <script src='<c:url value="/resources/register/js/main.js"/>'></script>
 <script src='<c:url value="/resources/register/js/custom.js"/>'></script>
+<script src='<c:url value="/resources/customJS/passwordValidation.js"/>'></script>
 <script>$(document).ready(function () {
     $('.js-example-basic-multiple').select2();
 });</script>

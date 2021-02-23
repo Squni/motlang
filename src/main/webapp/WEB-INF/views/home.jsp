@@ -56,7 +56,7 @@
         </ul>
 
         <a href="/register" title="sign-up" class="button button-primary cta">Sign Up</a>
-        <a href="/login" title="sign-up" class="button button-primary cta">Login</a>
+        <a href="/login" title="sign-up" class="button button-primary cta">Log In</a>
     </nav>
 
     <a class="header-menu-toggle" href="#"><span>Menu</span></a>

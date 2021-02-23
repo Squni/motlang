@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.motlang.entity.Language;
 import pl.coderslab.motlang.entity.User;
 import pl.coderslab.motlang.repository.LanguageRepository;
-import pl.coderslab.motlang.service.RegisterService;
+import pl.coderslab.motlang.service.UserService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -16,12 +16,12 @@ import java.util.List;
 public class UserController {
 
     private final LanguageRepository langRepo;
-    private final RegisterService registerService;
+    private final UserService userService;
 
 
-    public UserController(LanguageRepository langRepo, RegisterService registerService) {
+    public UserController(LanguageRepository langRepo, UserService userService) {
         this.langRepo = langRepo;
-        this.registerService = registerService;
+        this.userService = userService;
     }
 
     @ModelAttribute("languages")
@@ -38,7 +38,7 @@ public class UserController {
     @PostMapping("/register")
     public String register(Model model, @Valid User user, BindingResult result, @RequestParam String terms,
                            @RequestParam String confirm) {
-        if (registerService.register(model, user, terms, confirm, result)) {
+        if (userService.register(model, user, terms, confirm, result)) {
             return "redirect:login";
         }
         model.addAttribute("languages", langRepo.findAll());
@@ -51,6 +51,4 @@ public class UserController {
         return "login";
     }
 
-    public void edit(Long id) {
-    }
 }

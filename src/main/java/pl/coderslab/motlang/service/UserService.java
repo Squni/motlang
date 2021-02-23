@@ -2,10 +2,9 @@ package pl.coderslab.motlang.service;
 
 import lombok.Data;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import pl.coderslab.motlang.dao.Register;
+import pl.coderslab.motlang.dao.Service;
 import pl.coderslab.motlang.entity.Role;
 import pl.coderslab.motlang.entity.User;
 import pl.coderslab.motlang.repository.RoleRepository;
@@ -14,15 +13,15 @@ import pl.coderslab.motlang.repository.UserRepository;
 import java.util.Arrays;
 import java.util.HashSet;
 
-@Service
+@org.springframework.stereotype.Service
 @Data
-public class RegisterService implements Register {
+public class UserService implements Service {
 
     private final UserRepository userRepo;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    RegisterService(UserRepository userRepo, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    UserService(UserRepository userRepo, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
         this.roleRepository = roleRepository;
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
@@ -53,8 +52,18 @@ public class RegisterService implements Register {
             user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
             userRepo.save(user);
             model.addAttribute("registered", "Successfully registered");
+
         }
         return check;
+    }
+
+    @Override
+    public void edit(String password, String passConf, User user) {
+        if (!password.isBlank() && password.equals(passConf)
+                && password.matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
+        userRepo.save(user);
     }
 
 }

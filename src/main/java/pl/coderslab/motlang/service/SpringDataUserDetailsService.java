@@ -3,7 +3,6 @@ package pl.coderslab.motlang.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import pl.coderslab.motlang.entity.CurrentUser;
@@ -25,14 +24,13 @@ public class SpringDataUserDetailsService implements UserDetailsService {
     @Override
     public CurrentUser loadUserByUsername(String username) {
         User user = userRepo.findByUserName(username);
-        System.out.println(user);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         user.getRoles().forEach(r ->
                 grantedAuthorities.add(new SimpleGrantedAuthority(r.getName())));
-        return new CurrentUser(user.getUserName(),user.getPassword(),
+        return new CurrentUser(user.getUserName(), user.getPassword(),
                 grantedAuthorities, user);
     }
 

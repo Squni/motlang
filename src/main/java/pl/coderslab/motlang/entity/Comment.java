@@ -23,6 +23,4 @@ public class Comment {
     @Max(5)
     private int rating;
 
-    @ManyToOne
-    private User user;
 }
