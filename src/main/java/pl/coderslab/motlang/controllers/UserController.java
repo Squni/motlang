@@ -10,6 +10,7 @@ import pl.coderslab.motlang.repository.LanguageRepository;
 import pl.coderslab.motlang.service.UserService;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -37,7 +38,7 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(Model model, @Valid User user, BindingResult result, @RequestParam String terms,
-                           @RequestParam String confirm) {
+                           @RequestParam String confirm) throws IOException {
         if (userService.register(model, user, terms, confirm, result)) {
             return "redirect:login";
         }

@@ -50,7 +50,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="profile-img">
-                                <img src='<c:url value="/users/avatar/${user.id}.jpg"/>' alt=""/>
+                                <img src='<c:url value="/users/${user.id}/avatar.jpg"/>' alt=""/>
                                 <div class="file btn btn-lg btn-primary">
                                     Change Photo
                                     <input type="file" name="file"/>
@@ -80,6 +80,10 @@
                                     <li class="nav-item">
                                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
                                            role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews"
+                                           role="tab" aria-controls="reviews" aria-selected="false">Reviews</a>
                                     </li>
                                 </ul>
                             </div>
@@ -132,6 +136,15 @@
                                         </div>
                                         <p/>
                                         <div class="row">
+                                            <div class="col-md-6" style="max-width: 10%">
+                                                <label>Bio</label>
+                                            </div>
+                                            <div class="col-md-6" style="max-width: 60%">
+                                                <form:textarea path="bio"
+                                                               cssStyle="width: 477px; text-align: justify"/></div>
+                                        </div>
+                                        <p/>
+                                        <div class="row">
                                             <div class="col-md-6">
                                                 <label>Wants to learn</label>
                                             </div>
@@ -181,14 +194,6 @@
                                      aria-labelledby="home-tab">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label>Username</label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>${user.userName}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
                                             <label>Name</label>
                                         </div>
                                         <div class="col-md-6">
@@ -208,7 +213,7 @@
                                             <label>Rank</label>
                                         </div>
                                         <div class="col-md-6">
-                                            <p>${user.rank}</p>
+                                            <p>${user.level}</p>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -218,6 +223,14 @@
                                         <div class="col-md-6">
                                             <p><c:forEach items="${user.toLearnLanguages}"
                                                           var="language">${language.name} </c:forEach></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6" style="max-width: 10%">
+                                            <label>Bio</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p style="display: block; width: 430px; text-align: justify">${user.bio}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -268,6 +281,25 @@
                                             <label>Your Bio</label><br/>
                                             <p>Your detail description</p>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="reviews" role="tabpanel"
+                                     aria-labelledby="reviews-tab">
+                                    <div class="row" style="display: grid">
+                                        <c:forEach items="${user.comments}" var="comment">
+                                            <div class="col-md-6" style="display: flex">
+                                                <label style="flex: 0 0 50%">${comment.author.name} ${comment.author.lastName}</label>
+                                                <span class="rating-input" style="display: inline-flex">
+                                                <fmt:formatNumber var="commentRating" value="${comment.rating}"
+                                                              maxFractionDigits="0"/>
+                                                <input type="number" class="rating" data-readonly="true" value="${commentRating}">
+                                                </span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>${comment.content}</p>
+                                            </div>
+
+                                        </c:forEach>
                                     </div>
                                 </div>
                             </div>

@@ -24,4 +24,6 @@
     <script src='<c:url value="/resources/register/vendor/jquery/jquery.min.js"/>'></script>
     <link href='<c:url value="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"/>'
           rel="stylesheet"/>
+    <link href='<c:url value="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>'
+          rel="stylesheet">
 </head>

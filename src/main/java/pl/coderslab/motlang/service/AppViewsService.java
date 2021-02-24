@@ -32,8 +32,8 @@ public class AppViewsService implements AppViews {
     }
 
     @Override
-    public List<User> matchUsersByRank(List<Language> toLearnLanguages) {
-        return userRepo.findTop5InMotherTongueIdsOrderByRank(languagesToIds(toLearnLanguages));
+    public List<User> matchUsersByLevel(List<Language> toLearnLanguages) {
+        return userRepo.findTop5InMotherTongueIdsOrderByLevel(languagesToIds(toLearnLanguages));
     }
 
     @Override

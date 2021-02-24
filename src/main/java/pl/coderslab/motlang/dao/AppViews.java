@@ -10,7 +10,7 @@ public interface AppViews {
 
     List<User> matchUsersByRating(List<Language> languages);
 
-    List<User> matchUsersByRank(List<Language> toLearnLanguages);
+    List<User> matchUsersByLevel(List<Language> toLearnLanguages);
 
     Map<String, List<User>> search(String searchParam);
 

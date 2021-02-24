@@ -71,7 +71,7 @@
                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                    class="p-0 btn">
                                     <img width="42" class="rounded-circle"
-                                         src='<c:url value="/users/avatar/${user.id}.jpg"/>' alt="">
+                                         src='<c:url value="/users/${user.id}/avatar.jpg"/>' alt="">
                                     <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                 </a>
                                 <div tabindex="-1" role="menu" aria-hidden="true"
@@ -86,13 +86,13 @@
                                 ${user.name} ${user.lastName}
                             </div>
                             <div class="widget-subheading">
-                                Rank: ${user.rank}
+                                Rank: ${user.level}
                             </div>
                         </div>
                         <form action="<c:url value="/logout"/>" method="post">
                             <div class="widget-content-right header-user-info ml-3">
                                 <button type="submit" class="btn-shadow p-1 btn btn-danger btn-sm">
-                                    <i class="fa text-white pe-7s-power pr-1 pl-1"></i>
+                                    <i class="fa text-white fa-power-off pr-1 pl-1"></i>
                                 </button>
                             </div>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

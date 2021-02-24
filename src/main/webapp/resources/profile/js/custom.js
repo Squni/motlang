@@ -7,6 +7,7 @@ const tab1Btn = document.getElementById('home-tab');
 const tab2Btn = document.getElementById('profile-tab');
 
 edit.addEventListener('click', ev => {
+    edit.setAttribute('hidden', 'hidden');
     tab1.classList.remove('show', 'active');
     tab2.classList.remove('show', 'active');
     tab1Btn.classList.remove('show', 'active');
@@ -14,7 +15,16 @@ edit.addEventListener('click', ev => {
     editForm.classList.add('active', 'show');
 })
 
+tab1Btn.addEventListener('click', ev => {
+    edit.removeAttribute('hidden');
+})
+
+tab2Btn.addEventListener('click', ev => {
+    edit.removeAttribute('hidden');
+})
+
 cancel.addEventListener('click', ev => {
+    edit.removeAttribute('hidden');
     editForm.classList.remove('show');
     editForm.classList.remove('active');
     tab1.classList.add('show', 'active');

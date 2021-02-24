@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select * from user where mother_tongue_id in ?1 order by rating desc limit 5", nativeQuery = true)
     List<User> findTop5InMotherTongueIdsOrderByRating(List<Integer> motherTongueIds);
 
-    @Query(value = "select * from user where mother_tongue_id in ?1 order by user.`rank` desc limit 5", nativeQuery = true)
-    List<User> findTop5InMotherTongueIdsOrderByRank(List<Integer> motherTongueIds);
+    @Query(value = "select * from user where mother_tongue_id in ?1 order by user.`level` desc limit 5", nativeQuery = true)
+    List<User> findTop5InMotherTongueIdsOrderByLevel(List<Integer> motherTongueIds);
 
 }

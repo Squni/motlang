@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import pl.coderslab.motlang.entity.Comment;
 import pl.coderslab.motlang.entity.CurrentUser;
 import pl.coderslab.motlang.entity.Language;
 import pl.coderslab.motlang.entity.User;
@@ -54,7 +55,7 @@ public class AppController {
 
     @ModelAttribute("pairedUsersByRank")
     public List<User> pairedByRank() {
-        return appService.matchUsersByRank(user.getToLearnLanguages());
+        return appService.matchUsersByLevel(user.getToLearnLanguages());
     }
 
     @ModelAttribute("date")
@@ -69,7 +70,8 @@ public class AppController {
     }
 
     @GetMapping("profile")
-    public String profile() {
+    public String profile(Model model) {
+        model.addAttribute("user", userService.getUserWithComments(user));
         return "profile";
     }
 
@@ -85,16 +87,30 @@ public class AppController {
     @GetMapping("visit/profile/{id}")
     public String visitProfile(@PathVariable String id, Model model) {
         if (NumberUtils.isParsable(id)) {
-            model.addAttribute("visitUser", userRepository.findById(Long.parseLong(id)));
+            Long idL = Long.parseLong(id);
+            model.addAttribute("comment", new Comment());
+            model.addAttribute("visitUser", userService.getUserWithComments(idL));
             return "visitProfile";
         } else {
             return "error";
         }
     }
 
+    @PostMapping("visit/profile/{id}")
+    public String addComment(@PathVariable String id, Comment comment) {
+        userService.addComment(Long.parseLong(id), comment, user);
+        return "redirect:{id}";
+    }
+
     @PostMapping("search")
     public String search(@RequestParam String param, Model model) {
         model.addAttribute("results", appService.search(param));
         return "search";
+    }
+
+    @GetMapping("explore")
+    public String explore(Model model) {
+        model.addAttribute("users", userRepository.findAll());
+        return "explore";
     }
 }

@@ -17,7 +17,7 @@
                 </a>
                 <ul>
                     <li>
-                        <a href="../components/elements-buttons-standard.html">
+                        <a href='<c:url value="/app/explore"/>'/>
                             <i class="metismenu-icon"></i>
                             Find teacher
                         </a>

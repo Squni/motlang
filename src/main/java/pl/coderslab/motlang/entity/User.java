@@ -1,7 +1,6 @@
 package pl.coderslab.motlang.entity;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -43,8 +42,9 @@ public class User {
 
     private int enabled;
 
-    @Value("0.0")
-    private double rating;
+    private String bio;
+
+    private double rating = 0;
 
     @ManyToOne
     private Language motherTongue;
@@ -57,16 +57,14 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    @Value("0")
-    private Long points;
+    private Long points = 0l;
 
-    @Value("1")
-    private Long rank;
+    private Long level = 1l;
 
     @OneToMany
     private List<Lesson> lessons;
 
-    @OneToMany
+    @OneToMany(mappedBy = "owner")
     private List<Comment> comments;
 
     public User() {

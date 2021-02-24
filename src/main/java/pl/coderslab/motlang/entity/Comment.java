@@ -1,6 +1,7 @@
 package pl.coderslab.motlang.entity;
 
 import lombok.Data;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -19,8 +20,17 @@ public class Comment {
     @Size(max = 255)
     private String content;
 
+    @ManyToOne
+    private User owner;
+
+    @ManyToOne
+    private User author;
+
     @Min(1)
     @Max(5)
     private int rating;
 
+    public Comment() {
+
+    }
 }
