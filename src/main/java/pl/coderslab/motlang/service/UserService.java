@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import pl.coderslab.motlang.dao.Service;
 import pl.coderslab.motlang.entity.Comment;
+import pl.coderslab.motlang.entity.EditedUser;
 import pl.coderslab.motlang.entity.Role;
 import pl.coderslab.motlang.entity.User;
 import pl.coderslab.motlang.repository.CommentRepository;
@@ -71,10 +72,25 @@ public class UserService implements Service {
     }
 
     @Override
-    public void edit(String password, String passConf, User user) {
+    public void edit(String password, String passConf, User user, EditedUser editedUser) {
         if (!password.isBlank() && password.equals(passConf)
                 && password.matches("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}")) {
             user.setPassword(passwordEncoder.encode(password));
+        }
+        if (!editedUser.getName().isBlank()) {
+            user.setName(editedUser.getName());
+        }
+        if (!editedUser.getLastName().isBlank()) {
+            user.setLastName(editedUser.getLastName());
+        }
+        if (!editedUser.getEmail().isBlank()) {
+            user.setEmail(editedUser.getEmail());
+        }
+        if (!editedUser.getBio().isBlank()) {
+            user.setBio(editedUser.getBio());
+        }
+        if (editedUser.getToLearnLanguages() != user.getToLearnLanguages()) {
+            user.setToLearnLanguages(editedUser.getToLearnLanguages());
         }
         userRepo.save(user);
     }
@@ -108,6 +124,21 @@ public class UserService implements Service {
         commentRepo.save(comment);
     }
 
+    @Override
+    public double countRating(List<Comment> comments) {
+        double rating = comments.stream().mapToInt(comment -> comment.getRating()).sum();
+        rating /= comments.size();
+        return rating;
+    }
+
+    @Override
+    public void updateRating(Long id) {
+        User user = userRepo.findById(id).get();
+        Hibernate.initialize(user.getComments());
+        double newRating = countRating(user.getComments());
+        user.setRating(newRating);
+        userRepo.save(user);
+    }
 
 
 }

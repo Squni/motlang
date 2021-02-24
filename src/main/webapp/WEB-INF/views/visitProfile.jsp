@@ -67,7 +67,9 @@
                                                               maxFractionDigits="0"/>
                                             <input type="number" class="rating" data-readonly="true" value="${rating}">
                                         </span>
-                                    <span>${visitUser.rating}</span></p>
+                                    <fmt:formatNumber var="ratingDisplay" value="${visitUser.rating}"
+                                                      maxFractionDigits="1"/>
+                                    <span>${ratingDisplay}</span></p>
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"

@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.motlang.entity.Comment;
-import pl.coderslab.motlang.entity.CurrentUser;
-import pl.coderslab.motlang.entity.Language;
-import pl.coderslab.motlang.entity.User;
+import pl.coderslab.motlang.entity.*;
 import pl.coderslab.motlang.repository.LanguageRepository;
 import pl.coderslab.motlang.repository.UserRepository;
 import pl.coderslab.motlang.service.AppViewsService;
@@ -72,16 +69,17 @@ public class AppController {
     @GetMapping("profile")
     public String profile(Model model) {
         model.addAttribute("user", userService.getUserWithComments(user));
+        EditedUser editedUser = new EditedUser();
+        editedUser.setToLearnLanguages(user.getToLearnLanguages());
+        model.addAttribute("editedUser", editedUser);
         return "profile";
     }
 
-    @PostMapping("/app/profile")
-    public String profile(@Valid User userEdit, BindingResult result,
+    @PostMapping("edit")
+    public String profile(EditedUser editedUser,
                           @RequestParam String password, @RequestParam String passConfirm) {
-        if (!result.hasErrors()) {
-            userService.edit(password, passConfirm, userEdit);
-        }
-        return "profile";
+        userService.edit(password, passConfirm, user, editedUser);
+        return "redirect:/app/profile";
     }
 
     @GetMapping("visit/profile/{id}")
@@ -98,7 +96,9 @@ public class AppController {
 
     @PostMapping("visit/profile/{id}")
     public String addComment(@PathVariable String id, Comment comment) {
-        userService.addComment(Long.parseLong(id), comment, user);
+        Long idL = Long.parseLong(id);
+        userService.addComment(idL, comment, user);
+        userService.updateRating(idL);
         return "redirect:{id}";
     }
 

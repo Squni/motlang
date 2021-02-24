@@ -110,54 +110,58 @@
                         <div class="col-md-8">
                             <div class="tab-content profile-tab" id="myTabContent">
                                 <div class="tab-pane fade" id="edit-form">
-                                    <form:form modelAttribute="user" method="post">
+                                    <form:form modelAttribute="editedUser" method="post" action="/app/edit">
+                                        <form:hidden path="id" value="${user.id}"/>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label>Name</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p><form:input path="name"/></p>
+                                                <p><form:input path="name" placeholder="${user.name}"/></p>
                                             </div>
                                         </div>
+                                        <br/>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label>Last name</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p><form:input path="lastName"/></p>
+                                                <p><form:input path="lastName" placeholder="${user.lastName}"/></p>
                                             </div>
                                         </div>
+                                        <br/>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label>Email</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <form:input path="email"/></div>
+                                                <form:input path="email" placeholder="${user.email}"/></div>
                                         </div>
-                                        <p/>
+                                        <br/>
                                         <div class="row">
                                             <div class="col-md-6" style="max-width: 10%">
                                                 <label>Bio</label>
                                             </div>
                                             <div class="col-md-6" style="max-width: 60%">
                                                 <form:textarea path="bio"
-                                                               cssStyle="width: 477px; text-align: justify"/></div>
+                                                               cssStyle="width: 477px; text-align: justify; height: 115px" placeholder="${user.bio}"/>
+                                            </div>
                                         </div>
-                                        <p/>
+                                        <br/>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label>Wants to learn</label>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="select-list" id="languagesToLearn">
-                                                    <form:select path="toLearnLanguages" multiple="multiple"
+                                                    <form:select path="toLearnLanguages"  multiple="multiple"
                                                                  class="js-example-basic-multiple" style="width: 200px">
                                                         <form:options items="${languages}" itemLabel="name"/>
                                                     </form:select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <p/>
+                                        <br/>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label>New password</label>
@@ -167,14 +171,13 @@
                                                        placeholder="New password"
                                                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"/></div>
                                         </div>
-                                        <p/>
                                         <div id="message">
                                             <div id="letter" class="invalid">A <b>lowercase</b> letter</div>
                                             <div id="capital" class="invalid">A <b>capital (uppercase)</b> letter</div>
                                             <div id="number" class="invalid">A <b>number</b></div>
                                             <div id="length" class="invalid">Minimum <b>8 characters</b></div>
                                         </div>
-                                        <p/>
+                                        <br/>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label>Confirm password</label>
@@ -276,12 +279,6 @@
                                             <p>6 months</p>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label>Your Bio</label><br/>
-                                            <p>Your detail description</p>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="reviews" role="tabpanel"
                                      aria-labelledby="reviews-tab">
@@ -291,8 +288,9 @@
                                                 <label style="flex: 0 0 50%">${comment.author.name} ${comment.author.lastName}</label>
                                                 <span class="rating-input" style="display: inline-flex">
                                                 <fmt:formatNumber var="commentRating" value="${comment.rating}"
-                                                              maxFractionDigits="0"/>
-                                                <input type="number" class="rating" data-readonly="true" value="${commentRating}">
+                                                                  maxFractionDigits="0"/>
+                                                <input type="number" class="rating" data-readonly="true"
+                                                       value="${commentRating}">
                                                 </span>
                                             </div>
                                             <div class="col-md-6">
