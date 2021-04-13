@@ -34,3 +34,4 @@ is a native speaker and can teach them their desired language.
 * Spring Security
 * Bootstrap
 * JavaScript
+* MySQL
