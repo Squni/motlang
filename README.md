@@ -29,9 +29,11 @@ is a native speaker and can teach them their desired language.
 ## Technologies used
 
 * Java
-* Spring
+* Spring Boot
 * Hibernate
 * Spring Security
 * Bootstrap
 * JavaScript
 * MySQL
+* Maven
+* JSTL
