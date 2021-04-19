@@ -2,9 +2,9 @@
 
 ## Description
 
-Motlang is a webapp which main purpose is to help people learn foreign languages. 
-The app finds and matches its users in a way they can easily choose a teacher who 
-is a native speaker and can teach them their desired language. 
+Motlang is a web app which main purpose is to help people learn foreign languages. 
+The app allows native speakers to establish cooperation based on partner exchange 
+in teaching-learning selected foreign languages.
 
 ## Features
 
